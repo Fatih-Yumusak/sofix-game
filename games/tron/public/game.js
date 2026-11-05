@@ -10,13 +10,12 @@
     '#38bdf8'
   ];
 
-  const SVG_COPY = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-  const SVG_CHECK = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-  const SVG_BOLT = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
-  const SVG_FLAME = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>';
-  const SVG_SHIELD = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
-  const SVG_VOL_ON = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
-  const SVG_VOL_OFF = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+  const SVG_COPY = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const SVG_CHECK = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const SVG_BOLT = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+  const SVG_FLAME = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>';
+  const SVG_VOL_ON = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+  const SVG_VOL_OFF = '<svg width="13" height="13" class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
 
   // ==========================================
   // DOM ELEMENTS
@@ -139,18 +138,21 @@
   renderSwatches();
 
   // ==========================================
-  // THREE.JS 3D SCENE SETUP
+  // THREE.JS 3D SCENE SETUP (HIGH PERFORMANCE)
   // ==========================================
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x030712);
-  scene.fog = new THREE.FogExp2(0x030712, 0.0018);
 
-  const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.5, 1400);
+  const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 1100);
   camera.position.set(0, 55, 110);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: false,
+    powerPreference: 'high-performance'
+  });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Locked to 1x pixel ratio for maximum 60/120 FPS smoothness on Retina/high-DPI screens
+  renderer.setPixelRatio(1);
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', () => {
@@ -158,14 +160,6 @@
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0x94a3b8, 0.9);
-  scene.add(ambientLight);
-
-  const dirLight = new THREE.DirectionalLight(0x38bdf8, 0.95);
-  dirLight.position.set(120, 220, 90);
-  scene.add(dirLight);
 
   // Arena Floor, Grid & Boundary Walls Group
   let arenaSize = 680;
@@ -177,18 +171,14 @@
     while (arenaGroup.children.length) arenaGroup.remove(arenaGroup.children[0]);
 
     const floorGeo = new THREE.PlaneGeometry(size, size);
-    const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x050b16,
-      roughness: 0.3,
-      metalness: 0.7
-    });
+    const floorMat = new THREE.MeshBasicMaterial({ color: 0x050b16 });
     const floorMesh = new THREE.Mesh(floorGeo, floorMat);
     floorMesh.rotation.x = -Math.PI / 2;
     floorMesh.position.y = -0.05;
     arenaGroup.add(floorMesh);
 
-    const gridHelper = new THREE.GridHelper(size, 100, 0x00f2fe, 0x0f2942);
-    gridHelper.position.y = 0.01;
+    const gridHelper = new THREE.GridHelper(size, 44, 0x00f2fe, 0x0c243b);
+    gridHelper.position.y = 0.02;
     arenaGroup.add(gridHelper);
 
     const half = size / 2;
@@ -196,7 +186,7 @@
     const wallMat = new THREE.MeshBasicMaterial({
       color: 0x00f2fe,
       transparent: true,
-      opacity: 0.24,
+      opacity: 0.22,
       side: THREE.DoubleSide
     });
     const edgeMat = new THREE.LineBasicMaterial({ color: 0x00f2fe });
@@ -232,20 +222,17 @@
   let rampsList = [];
 
   function createSlopedWedgeGeometry(length, height, width) {
-    // 2D right-triangle profile in XY, extruded along Z (width)
     const shape = new THREE.Shape();
     shape.moveTo(-length / 2, 0);
     shape.lineTo(length / 2, 0);
     shape.lineTo(length / 2, height);
     shape.closePath();
 
-    const extrudeSettings = {
+    const geo = new THREE.ExtrudeGeometry(shape, {
       steps: 1,
       depth: width,
       bevelEnabled: false
-    };
-    const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    // Center along Z axis
+    });
     geo.translate(0, 0, -width / 2);
     return geo;
   }
@@ -257,7 +244,7 @@
     const slopeMat = new THREE.MeshBasicMaterial({
       color: 0x0284c7,
       transparent: true,
-      opacity: 0.52,
+      opacity: 0.48,
       side: THREE.DoubleSide
     });
     const neonEdgeMat = new THREE.LineBasicMaterial({ color: 0x00f2fe });
@@ -270,7 +257,6 @@
       const rampH = r.h || 4.2;
 
       if (r.omni) {
-        // 4-Way 3D Pyramid Stunt Ramp (Accessible from any direction!)
         const radius = Math.max(r.w, r.d) * 0.68;
         const coneGeo = new THREE.ConeGeometry(radius, rampH, 4);
         coneGeo.rotateY(Math.PI / 4);
@@ -283,7 +269,6 @@
         line.position.y = rampH / 2;
         holder.add(line);
       } else {
-        // Directional 3D Sloped Wedge Ramp + Double-Sided Back Slope
         const length = Math.max(r.w, r.d);
         const width = Math.min(r.w, r.d);
         const wedgeGeo = createSlopedWedgeGeometry(length, rampH, width);
@@ -301,124 +286,147 @@
   }
 
   // ==========================================
-  // 3D LIGHTCYCLE FACTORY
+  // 3D LIGHTCYCLE FACTORY (FAST BASIC MATERIALS)
   // ==========================================
+  const sharedBodyGeo = new THREE.BoxGeometry(4.4, 1.3, 1.3);
+  const sharedCanopyGeo = new THREE.BoxGeometry(2.8, 0.8, 1.1);
+  const sharedStripGeo = new THREE.BoxGeometry(4.5, 0.22, 1.42);
+  const sharedWheelGeo = new THREE.TorusGeometry(0.95, 0.24, 8, 16);
+  const sharedShieldGeo = new THREE.SphereGeometry(3.2, 10, 10);
+  const sharedBodyMat = new THREE.MeshBasicMaterial({ color: 0x0f172a });
+  const sharedShieldMat = new THREE.MeshBasicMaterial({
+    color: 0x22c55e,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.45
+  });
+
   function createLightcycleMesh(hexColor) {
     const group = new THREE.Group();
-    const neonColor = new THREE.Color(hexColor);
+    const neonMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(hexColor) });
 
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      roughness: 0.25,
-      metalness: 0.85
-    });
-    const neonMat = new THREE.MeshBasicMaterial({ color: neonColor });
-
-    const chassis = new THREE.Mesh(new THREE.BoxGeometry(4.4, 1.3, 1.3), bodyMat);
+    const chassis = new THREE.Mesh(sharedBodyGeo, sharedBodyMat);
     chassis.position.set(0, 1.1, 0);
     group.add(chassis);
 
-    const canopy = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.8, 1.1), neonMat);
+    const canopy = new THREE.Mesh(sharedCanopyGeo, neonMat);
     canopy.position.set(0.2, 1.85, 0);
     group.add(canopy);
 
-    const stripGeo = new THREE.BoxGeometry(4.5, 0.22, 1.42);
-    const strip = new THREE.Mesh(stripGeo, neonMat);
+    const strip = new THREE.Mesh(sharedStripGeo, neonMat);
     strip.position.set(0, 1.15, 0);
     group.add(strip);
 
-    const wheelGeo = new THREE.TorusGeometry(0.95, 0.24, 10, 24);
-    const frontWheel = new THREE.Mesh(wheelGeo, neonMat);
+    const frontWheel = new THREE.Mesh(sharedWheelGeo, neonMat);
     frontWheel.position.set(1.75, 0.95, 0);
     group.add(frontWheel);
 
-    const rearWheel = new THREE.Mesh(wheelGeo, neonMat);
+    const rearWheel = new THREE.Mesh(sharedWheelGeo, neonMat);
     rearWheel.position.set(-1.75, 0.95, 0);
     group.add(rearWheel);
 
-    const shieldGeo = new THREE.SphereGeometry(3.3, 14, 14);
-    const shieldMat = new THREE.MeshBasicMaterial({
-      color: 0x22c55e,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45
-    });
-    const shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+    const shieldMesh = new THREE.Mesh(sharedShieldGeo, sharedShieldMat);
     shieldMesh.position.set(0, 1.4, 0);
     shieldMesh.visible = false;
     group.add(shieldMesh);
 
-    return { group, shieldMesh };
+    return { group, shieldMesh, neonMat };
   }
 
   // ==========================================
-  // DYNAMIC 3D LIGHT WALL RIBBON BUILDER
+  // PRE-ALLOCATED ZERO-GC 3D LIGHT WALL RIBBONS
   // ==========================================
   const WALL_HEIGHT = 3.4;
+  const MAX_TRAIL_PTS = 360;
 
   function createTrailObjects(hexColor) {
     const color = new THREE.Color(hexColor);
     const wallMat = new THREE.MeshBasicMaterial({
       color,
       transparent: true,
-      opacity: 0.48,
+      opacity: 0.46,
       side: THREE.DoubleSide,
       depthWrite: false
     });
+
+    const wallArray = new Float32Array(MAX_TRAIL_PTS * 18);
+    const wallAttr = new THREE.BufferAttribute(wallArray, 3);
+    wallAttr.setUsage(THREE.DynamicDrawUsage);
+
     const wallGeo = new THREE.BufferGeometry();
+    wallGeo.setAttribute('position', wallAttr);
+    wallGeo.setDrawRange(0, 0);
+
     const wallMesh = new THREE.Mesh(wallGeo, wallMat);
+    wallMesh.frustumCulled = false;
     scene.add(wallMesh);
 
-    const topLineMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
+    const topArray = new Float32Array(MAX_TRAIL_PTS * 6);
+    const topAttr = new THREE.BufferAttribute(topArray, 3);
+    topAttr.setUsage(THREE.DynamicDrawUsage);
+
     const topLineGeo = new THREE.BufferGeometry();
+    topLineGeo.setAttribute('position', topAttr);
+    topLineGeo.setDrawRange(0, 0);
+
+    const topLineMat = new THREE.LineBasicMaterial({ color: 0xffffff });
     const topLine = new THREE.LineSegments(topLineGeo, topLineMat);
+    topLine.frustumCulled = false;
     scene.add(topLine);
 
-    return { wallMesh, wallGeo, topLine, topLineGeo };
+    return {
+      wallMesh,
+      wallGeo,
+      wallAttr,
+      wallArray,
+      wallMat,
+      topLine,
+      topLineGeo,
+      topAttr,
+      topArray
+    };
   }
 
   function updateTrailGeometry(trailObj, points, currentX, currentZ, currentY) {
-    const allPts = [...(points || [])];
-    if (allPts.length > 0) {
-      allPts.push({ x: currentX, y: currentY, z: currentZ });
-    }
-
-    if (allPts.length < 2) {
-      trailObj.wallGeo.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
-      trailObj.topLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([], 3));
+    const len = points.length;
+    if (len === 0) {
+      trailObj.wallGeo.setDrawRange(0, 0);
+      trailObj.topLineGeo.setDrawRange(0, 0);
       return;
     }
 
-    const vertices = [];
-    const topPositions = [];
+    const wArr = trailObj.wallArray;
+    const tArr = trailObj.topArray;
+    let wIdx = 0;
+    let tIdx = 0;
 
-    for (let i = 0; i < allPts.length - 1; i++) {
-      const p1 = allPts[i];
-      const p2 = allPts[i + 1];
+    const limit = Math.min(len, MAX_TRAIL_PTS - 2);
+    for (let i = 0; i < limit; i++) {
+      const p1 = points[i];
+      const p2 = i + 1 < limit ? points[i + 1] : { x: currentX, y: currentY, z: currentZ };
       const y1 = p1.y || 0;
       const y2 = p2.y || 0;
 
-      vertices.push(
-        p1.x, y1, p1.z,
-        p2.x, y2, p2.z,
-        p2.x, y2 + WALL_HEIGHT, p2.z,
+      // Triangle 1
+      wArr[wIdx++] = p1.x; wArr[wIdx++] = y1;               wArr[wIdx++] = p1.z;
+      wArr[wIdx++] = p2.x; wArr[wIdx++] = y2;               wArr[wIdx++] = p2.z;
+      wArr[wIdx++] = p2.x; wArr[wIdx++] = y2 + WALL_HEIGHT; wArr[wIdx++] = p2.z;
 
-        p1.x, y1, p1.z,
-        p2.x, y2 + WALL_HEIGHT, p2.z,
-        p1.x, y1 + WALL_HEIGHT, p1.z
-      );
+      // Triangle 2
+      wArr[wIdx++] = p1.x; wArr[wIdx++] = y1;               wArr[wIdx++] = p1.z;
+      wArr[wIdx++] = p2.x; wArr[wIdx++] = y2 + WALL_HEIGHT; wArr[wIdx++] = p2.z;
+      wArr[wIdx++] = p1.x; wArr[wIdx++] = y1 + WALL_HEIGHT; wArr[wIdx++] = p1.z;
 
-      topPositions.push(
-        p1.x, y1 + WALL_HEIGHT, p1.z,
-        p2.x, y2 + WALL_HEIGHT, p2.z
-      );
+      // Top Line Segment
+      tArr[tIdx++] = p1.x; tArr[tIdx++] = y1 + WALL_HEIGHT; tArr[tIdx++] = p1.z;
+      tArr[tIdx++] = p2.x; tArr[tIdx++] = y2 + WALL_HEIGHT; tArr[tIdx++] = p2.z;
     }
 
-    trailObj.wallGeo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    trailObj.wallGeo.computeBoundingSphere();
+    trailObj.wallAttr.needsUpdate = true;
+    trailObj.wallGeo.setDrawRange(0, wIdx / 3);
 
-    trailObj.topLineGeo.setAttribute('position', new THREE.Float32BufferAttribute(topPositions, 3));
-    trailObj.topLineGeo.computeBoundingSphere();
+    trailObj.topAttr.needsUpdate = true;
+    trailObj.topLineGeo.setDrawRange(0, tIdx / 3);
   }
 
   // ==========================================
@@ -429,6 +437,8 @@
   let currentRoomCode = null;
   let inGame = false;
   let cameraMode = 0;
+  let lastHudUpdate = 0;
+  let initialTrailsCache = {};
 
   const playerEntities = new Map();
   const pickupMeshes = new Map();
@@ -443,13 +453,12 @@
     jump: false
   };
 
-  function spawnCrashParticles(x, y, z, hexColor) {
-    const color = new THREE.Color(hexColor);
-    const geo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
-    const mat = new THREE.MeshBasicMaterial({ color });
+  const crashBoxGeo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
 
-    for (let i = 0; i < 32; i++) {
-      const m = new THREE.Mesh(geo, mat);
+  function spawnCrashParticles(x, y, z, hexColor) {
+    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(hexColor) });
+    for (let i = 0; i < 20; i++) {
+      const m = new THREE.Mesh(crashBoxGeo, mat);
       m.position.set(x, y + 1.2, z);
       scene.add(m);
       const a = Math.random() * Math.PI * 2;
@@ -459,7 +468,7 @@
         vx: Math.cos(a) * spd,
         vy: 0.4 + Math.random() * 1.1,
         vz: Math.sin(a) * spd,
-        life: 45 + Math.floor(Math.random() * 20)
+        life: 36 + Math.floor(Math.random() * 15)
       });
     }
   }
@@ -472,7 +481,7 @@
     clearTimeout(showBanner._t);
     showBanner._t = setTimeout(() => {
       buffBanner.classList.add('hidden');
-    }, 2400);
+    }, 2200);
   }
 
   function addKillFeed(killer, victim, killerColor, victimColor, reason) {
@@ -487,7 +496,7 @@
       el.innerHTML = `<span style="color:${escapeHtml(victimColor)}">${safeVictim}</span> ${SVG_FLAME} ${label}`;
     }
     killFeed.appendChild(el);
-    setTimeout(() => el.remove(), 4200);
+    setTimeout(() => el.remove(), 4000);
   }
 
   // ==========================================
@@ -520,6 +529,7 @@
       } else if (msg.type === 'joined') {
         lobbyError.classList.add('hidden');
         currentRoomCode = msg.roomCode;
+        initialTrailsCache = msg.initialTrails || {};
         inGame = true;
         lobbyOverlay.classList.add('hidden');
         gameHud.classList.remove('hidden');
@@ -617,6 +627,8 @@
   // ==========================================
   // PROCESS SERVER STATE
   // ==========================================
+  const sharedPickupGeo = new THREE.OctahedronGeometry(2.4, 0);
+
   function handleServerState(state) {
     const activeIds = new Set();
 
@@ -627,6 +639,9 @@
         const bikeObj = createLightcycleMesh(sp.color);
         scene.add(bikeObj.group);
         const trailObj = createTrailObjects(sp.color);
+        const startTrail = initialTrailsCache[sp.id] || [{ x: sp.x, y: sp.y, z: sp.z }];
+        delete initialTrailsCache[sp.id];
+
         ent = {
           ...sp,
           rx: sp.x,
@@ -634,28 +649,48 @@
           rz: sp.z,
           rdir: sp.dir,
           roll: 0,
+          trail: startTrail,
           bikeGroup: bikeObj.group,
           shieldMesh: bikeObj.shieldMesh,
+          neonMat: bikeObj.neonMat,
           trailObj
         };
         playerEntities.set(sp.id, ent);
       } else {
-        if (Math.hypot(sp.x - ent.rx, sp.z - ent.rz) > 55) {
+        // If player respawned or teleported, reset their local trail
+        if ((ent.dead && !sp.dead) || Math.hypot(sp.x - ent.rx, sp.z - ent.rz) > 55) {
           ent.rx = sp.x;
           ent.ry = sp.y;
           ent.rz = sp.z;
           ent.rdir = sp.dir;
+          ent.trail = [{ x: sp.x, y: sp.y, z: sp.z }];
+        }
+        if (ent.color !== sp.color) {
+          ent.neonMat.color.set(sp.color);
+          ent.trailObj.wallMat.color.set(sp.color);
         }
         Object.assign(ent, sp);
       }
 
-      ent.bikeGroup.visible = !sp.dead;
-      ent.shieldMesh.visible = !!sp.shielded;
-      ent.trailObj.wallMesh.visible = !sp.dead;
-      ent.trailObj.topLine.visible = !sp.dead;
+      if (sp.dead) {
+        ent.trail = [];
+        ent.bikeGroup.visible = false;
+        ent.trailObj.wallMesh.visible = false;
+        ent.trailObj.topLine.visible = false;
+      } else {
+        ent.bikeGroup.visible = true;
+        ent.shieldMesh.visible = !!sp.shielded;
+        ent.trailObj.wallMesh.visible = true;
+        ent.trailObj.topLine.visible = true;
 
-      if (!sp.dead) {
-        updateTrailGeometry(ent.trailObj, sp.trail, ent.rx, ent.rz, ent.ry);
+        const lastPt = ent.trail[ent.trail.length - 1];
+        if (!lastPt || Math.hypot(sp.x - lastPt.x, sp.y - (lastPt.y || 0), sp.z - lastPt.z) >= 2.2) {
+          ent.trail.push({ x: sp.x, y: sp.y, z: sp.z });
+          const maxLen = sp.maxTrail || 180;
+          while (ent.trail.length > maxLen) {
+            ent.trail.shift();
+          }
+        }
       }
     }
 
@@ -673,12 +708,11 @@
     for (const pk of state.pickups || []) {
       activePickups.add(pk.id);
       if (!pickupMeshes.has(pk.id)) {
-        const geo = new THREE.OctahedronGeometry(2.4, 0);
         const mat = new THREE.MeshBasicMaterial({
           color: new THREE.Color(pk.color),
           wireframe: true
         });
-        const mesh = new THREE.Mesh(geo, mat);
+        const mesh = new THREE.Mesh(sharedPickupGeo, mat);
         mesh.position.set(pk.x, 2.6, pk.z);
         mesh.userData = pk;
         scene.add(mesh);
@@ -707,7 +741,12 @@
       }
     }
 
-    updateHud(state.players);
+    const now = performance.now();
+    if (now - lastHudUpdate > 200) {
+      lastHudUpdate = now;
+      updateHud(state.players);
+      renderMinimap();
+    }
   }
 
   function updateHud(players) {
@@ -769,10 +808,10 @@
   setInterval(() => {
     if (!inGame || !ws || ws.readyState !== WebSocket.OPEN) return;
     ws.send(JSON.stringify({ type: 'input', ...input }));
-  }, 25);
+  }, 30);
 
   // ==========================================
-  // 2D RADAR MINIMAP RENDERER
+  // 2D RADAR MINIMAP RENDERER (THROTTLED)
   // ==========================================
   function renderMinimap() {
     const w = minimapCanvas.width;
@@ -785,38 +824,27 @@
 
     const toMap = (val) => ((val + arenaSize / 2) / arenaSize) * (w - 8) + 4;
 
-    // Draw Ramps on radar
     mCtx.fillStyle = 'rgba(56, 189, 248, 0.45)';
     for (const r of rampsList) {
-      const rx = toMap(r.x);
-      const rz = toMap(r.z);
-      mCtx.fillRect(rx - 3, rz - 3, 6, 6);
+      mCtx.fillRect(toMap(r.x) - 2.5, toMap(r.z) - 2.5, 5, 5);
     }
 
-    // Draw Pickups on radar
     for (const mesh of pickupMeshes.values()) {
       const pk = mesh.userData;
       mCtx.fillStyle = pk.color;
-      mCtx.beginPath();
-      mCtx.arc(toMap(pk.x), toMap(pk.z), 2.5, 0, Math.PI * 2);
-      mCtx.fill();
+      mCtx.fillRect(toMap(pk.x) - 2, toMap(pk.z) - 2, 4, 4);
     }
 
-    // Draw Trails & Players on radar
     for (const ent of playerEntities.values()) {
       if (ent.dead) continue;
       mCtx.strokeStyle = ent.color;
-      mCtx.lineWidth = 1.6;
+      mCtx.lineWidth = 1.5;
       const pts = ent.trail || [];
       if (pts.length > 1) {
         mCtx.beginPath();
         mCtx.moveTo(toMap(pts[0].x), toMap(pts[0].z));
-        for (let i = 1; i < pts.length; i++) {
-          if (pts[i].gap) {
-            mCtx.moveTo(toMap(pts[i].x), toMap(pts[i].z));
-          } else {
-            mCtx.lineTo(toMap(pts[i].x), toMap(pts[i].z));
-          }
+        for (let i = 1; i < pts.length; i += 2) {
+          mCtx.lineTo(toMap(pts[i].x), toMap(pts[i].z));
         }
         mCtx.lineTo(toMap(ent.rx), toMap(ent.rz));
         mCtx.stroke();
@@ -824,23 +852,21 @@
 
       mCtx.fillStyle = ent.id === myId ? '#ffffff' : ent.color;
       mCtx.beginPath();
-      mCtx.arc(toMap(ent.rx), toMap(ent.rz), ent.id === myId ? 4 : 2.8, 0, Math.PI * 2);
+      mCtx.arc(toMap(ent.rx), toMap(ent.rz), ent.id === myId ? 3.5 : 2.5, 0, Math.PI * 2);
       mCtx.fill();
     }
   }
 
   // ==========================================
-  // MAIN 3D ANIMATION LOOP
+  // MAIN 3D ANIMATION LOOP (60/120 FPS)
   // ==========================================
   function animate() {
     requestAnimationFrame(animate);
 
-    const t = Date.now() * 0.003;
+    const t = performance.now() * 0.003;
 
     for (const mesh of pickupMeshes.values()) {
       mesh.rotation.y += 0.04;
-      mesh.rotation.x += 0.02;
-      mesh.position.y = 2.6 + Math.sin(t * 2 + mesh.position.x) * 0.5;
     }
 
     for (let i = particles3D.length - 1; i >= 0; i--) {
@@ -849,8 +875,6 @@
       p.mesh.position.y += p.vy;
       p.mesh.position.z += p.vz;
       p.vy -= 0.035;
-      p.mesh.rotation.x += 0.1;
-      p.mesh.rotation.y += 0.12;
       p.life -= 1;
       if (p.mesh.position.y < 0.3) {
         p.mesh.position.y = 0.3;
@@ -870,9 +894,11 @@
     }
 
     for (const ent of playerEntities.values()) {
-      ent.rx += (ent.x - ent.rx) * 0.38;
-      ent.ry += (ent.y - ent.ry) * 0.38;
-      ent.rz += (ent.z - ent.rz) * 0.38;
+      if (ent.dead) continue;
+
+      ent.rx += (ent.x - ent.rx) * 0.4;
+      ent.ry += (ent.y - ent.ry) * 0.4;
+      ent.rz += (ent.z - ent.rz) * 0.4;
 
       let diff = ent.dir - ent.rdir;
       while (diff > Math.PI) diff -= Math.PI * 2;
@@ -884,6 +910,8 @@
 
       ent.bikeGroup.position.set(ent.rx, ent.ry, ent.rz);
       ent.bikeGroup.rotation.set(ent.roll, -ent.rdir, ent.ry > 0.2 ? 0.18 : 0, 'YXZ');
+
+      updateTrailGeometry(ent.trailObj, ent.trail, ent.rx, ent.rz, ent.ry);
     }
 
     const me = playerEntities.get(myId);
@@ -895,16 +923,15 @@
       const targetCamZ = me.rz - Math.sin(me.rdir) * distBack;
       const targetCamY = me.ry + camHeight;
 
-      camera.position.x += (targetCamX - camera.position.x) * 0.18;
-      camera.position.y += (targetCamY - camera.position.y) * 0.18;
-      camera.position.z += (targetCamZ - camera.position.z) * 0.18;
+      camera.position.x += (targetCamX - camera.position.x) * 0.2;
+      camera.position.y += (targetCamY - camera.position.y) * 0.2;
+      camera.position.z += (targetCamZ - camera.position.z) * 0.2;
 
       const lookAheadX = me.rx + Math.cos(me.rdir) * 16;
       const lookAheadZ = me.rz + Math.sin(me.rdir) * 16;
       camera.lookAt(lookAheadX, me.ry + 1.8, lookAheadZ);
     }
 
-    renderMinimap();
     renderer.render(scene, camera);
   }
 

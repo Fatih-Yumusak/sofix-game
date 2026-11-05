@@ -561,7 +561,7 @@ function createTronServer() {
             shielded: now < p.shieldUntil,
             megaTrail: now < p.megaTrailUntil,
             turn: p.input.left ? -1 : p.input.right ? 1 : 0,
-            trail: p.trail
+            maxTrail: now < p.megaTrailUntil ? LONG_TRAIL_LENGTH : BASE_TRAIL_LENGTH
           })),
           pickups: room.pickups,
           events: room.events
@@ -643,11 +643,17 @@ function createTronServer() {
         room.players.set(playerId, player);
         syncBots(room);
 
+        const initialTrails = {};
+        for (const [pid, pl] of room.players.entries()) {
+          initialTrails[pid] = pl.trail;
+        }
+
         ws.send(JSON.stringify({
           type: 'joined',
           roomCode: room.code,
           isPublic: room.isPublic,
-          playerId
+          playerId,
+          initialTrails
         }));
       } else if (msg.type === 'input') {
         if (!ws.roomCode) return;
