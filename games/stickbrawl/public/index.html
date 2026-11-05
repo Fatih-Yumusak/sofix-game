@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STICKBRAWL.IO — Multiplayer Stickman Arena</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOBBY OVERLAY -->
+  <div id="lobbyOverlay" class="overlay">
+    <div class="lobby-card">
+      <div class="brand-header">
+        <a href="/" class="badge-live" style="text-decoration:none;">← SOFIX GAME HUB</a>
+        <h1>STICK<span>BRAWL</span>.IO</h1>
+        <p>Gerçek Zamanlı Çok Oyunculu 2D Çöp Adam Platform Savaşı</p>
+      </div>
+
+      <div class="lobby-grid">
+        <!-- Left column: Customization & Actions -->
+        <div class="lobby-col">
+          <label class="field-label" for="playerNameInput">OYUNCU ADIN</label>
+          <input
+            id="playerNameInput"
+            type="text"
+            maxlength="16"
+            placeholder="Örn: GölgeSavaşçı"
+            autocomplete="off"
+          />
+
+          <label class="field-label">ÇÖP ADAM RENGİ</label>
+          <div id="colorPicker" class="color-picker"></div>
+
+          <button id="btnQuickPlay" class="btn btn-primary">
+            ⚔️ HEMEN OYNA (GENEL ARENA)
+          </button>
+
+          <div class="divider"><span>VEYA ARKADAŞLARINLA OYNA</span></div>
+
+          <div class="room-actions">
+            <button id="btnCreateRoom" class="btn btn-secondary">
+              🏠 Özel Oda Kur
+            </button>
+            <div class="join-code-group">
+              <input
+                id="roomCodeInput"
+                type="text"
+                maxlength="6"
+                placeholder="ODA KODU"
+                autocomplete="off"
+              />
+              <button id="btnJoinCode" class="btn btn-accent">Katıl</button>
+            </div>
+          </div>
+
+          <div id="lobbyError" class="lobby-error hidden"></div>
+        </div>
+
+        <!-- Right column: Live Stickman Preview & Controls -->
+        <div class="lobby-col preview-col">
+          <div class="preview-box">
+            <canvas id="previewCanvas" width="220" height="160"></canvas>
+          </div>
+
+          <div class="controls-box">
+            <h3>🎮 KONTROLLER</h3>
+            <ul>
+              <li><span>A / D</span> veya <span>← / →</span> Hareket Et</li>
+              <li><span>W / Boşluk</span> Zıpla & Çift Zıpla</li>
+              <li><span>S / ↓</span> Platformdan Aşağı İn</li>
+              <li><span>Sol Tık</span> Ateş Et / Kılıç Savur</li>
+              <li><span>Shift / Sağ Tık</span> Dash (Atılma)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IN-GAME HUD -->
+  <div id="gameHud" class="hud hidden">
+    <!-- Top Left: Room & Quick Controls -->
+    <div class="hud-top-left">
+      <div class="hud-pill room-pill" id="roomBadge" title="Kodu kopyalamak için tıkla">
+        <span class="dot"></span>
+        <span id="roomCodeText">ODA: PUBLIC</span>
+        <small id="copyHint">📋 Kopyala</small>
+      </div>
+      <div class="hud-pill map-pill">
+        🗺️ <span id="mapNameText">Gökyüzü Tapınağı</span>
+      </div>
+      <div class="hud-btn-group">
+        <button id="btnNextMap" class="hud-btn" title="Haritayı Değiştir">🔄 Harita</button>
+        <button id="btnAddBot" class="hud-btn" title="Odaya Bot Ekle">🤖 +Bot</button>
+        <button id="btnRemoveBot" class="hud-btn" title="Odadan Bot Çıkar">🤖 -Bot</button>
+        <button id="btnToggleSound" class="hud-btn">🔊 Ses: Açık</button>
+        <button id="btnLeaveRoom" class="hud-btn danger">🚪 Çıkış</button>
+      </div>
+    </div>
+
+    <!-- Top Right: Leaderboard & Killfeed -->
+    <div class="hud-top-right">
+      <div class="scoreboard">
+        <div class="scoreboard-title">🏆 SKOR TABLOSU</div>
+        <div id="leaderboardList"></div>
+      </div>
+      <div id="killFeed" class="kill-feed"></div>
+    </div>
+
+    <!-- Bottom Center: Player Status Bar -->
+    <div class="hud-bottom">
+      <div class="status-card">
+        <div class="weapon-slot">
+          <span class="weapon-label">SİLAH</span>
+          <strong id="hudWeaponName">Yumruk</strong>
+          <span id="hudAmmoText" class="ammo-badge">∞</span>
+        </div>
+        <div class="bars-slot">
+          <div class="hp-row">
+            <span>CAN</span>
+            <span id="hudHpText">100 / 100</span>
+          </div>
+          <div class="hp-bar-bg">
+            <div id="hudHpFill" class="hp-bar-fill"></div>
+          </div>
+          <div class="sub-hint">
+            Gökten düşen <strong>Silah Kasalarını</strong> topla! (Katana, Pompalı, Roketatar, Lazer)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GAME CANVAS -->
+  <canvas id="gameCanvas"></canvas>
+
+  <script src="game.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,14 @@
+{
+  "name": "sofix-game",
+  "version": "1.0.0",
+  "description": "Sofix Game Hub - Modular Multiplayer Web Games Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
+  }
+}
