@@ -25,6 +25,19 @@ body, html {
   display: none !important;
 }
 
+.icon-xs {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  flex-shrink: 0;
+}
+
+.icon-sm {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 /* ==========================================
    LOBBY OVERLAY
    ========================================== */

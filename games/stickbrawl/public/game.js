@@ -182,9 +182,14 @@
   }
   renderSwatches();
 
-  // ==========================================
-  // WEBSOCKET CONNECTION
-  // ==========================================
+  const SVG_COPY = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const SVG_CHECK = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const SVG_BOLT = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>';
+  const SVG_SWORD = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/></svg>';
+  const SVG_CROSSHAIR = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>';
+  const SVG_FLAME = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>';
+  const SVG_VOL_ON = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+  const SVG_VOL_OFF = '<svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
   function connectWS(onReady) {
     if (ws && ws.readyState === WebSocket.OPEN) {
       if (onReady) onReady();
@@ -217,7 +222,7 @@
         roomCodeText.textContent = msg.isPublic
           ? 'GENEL ARENA'
           : `ODA KODU: ${msg.roomCode}`;
-        copyHint.textContent = msg.isPublic ? '⚡ Canlı' : '📋 Kodu Kopyala';
+        copyHint.innerHTML = msg.isPublic ? `${SVG_BOLT} Canlı` : `${SVG_COPY} Kodu Kopyala`;
         renderPlayers.clear();
       } else if (msg.type === 'state') {
         handleServerState(msg);
@@ -271,9 +276,9 @@
   roomBadge.addEventListener('click', () => {
     if (!currentRoomCode || currentRoomCode === 'PUBLIC') return;
     navigator.clipboard.writeText(currentRoomCode);
-    copyHint.textContent = '✅ Kopyalandı!';
+    copyHint.innerHTML = `${SVG_CHECK} Kopyalandı!`;
     setTimeout(() => {
-      copyHint.textContent = '📋 Kodu Kopyala';
+      copyHint.innerHTML = `${SVG_COPY} Kodu Kopyala`;
     }, 1800);
   });
 
@@ -297,7 +302,9 @@
 
   btnToggleSound.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
-    btnToggleSound.textContent = soundEnabled ? '🔊 Ses: Açık' : '🔇 Ses: Kapalı';
+    btnToggleSound.innerHTML = soundEnabled
+      ? `${SVG_VOL_ON} Ses: Açık`
+      : `${SVG_VOL_OFF} Ses: Kapalı`;
   });
 
   btnLeaveRoom.addEventListener('click', () => {
@@ -341,17 +348,17 @@
     const el = document.createElement('div');
     el.className = 'kill-item';
     const wepIcons = {
-      fist: '🥊',
-      sword: '⚔️',
-      pistol: '🔫',
-      shotgun: '💥',
-      smg: '⚡',
-      rocket: '🚀',
-      railgun: '🔦',
-      lava: '🌋',
-      void: '🕳️'
+      fist: SVG_SWORD,
+      sword: SVG_SWORD,
+      pistol: SVG_CROSSHAIR,
+      shotgun: SVG_CROSSHAIR,
+      smg: SVG_BOLT,
+      rocket: SVG_FLAME,
+      railgun: SVG_BOLT,
+      lava: SVG_FLAME,
+      void: SVG_CROSSHAIR
     };
-    const icon = wepIcons[weapon] || '⚔️';
+    const icon = wepIcons[weapon] || SVG_SWORD;
     const safeVictim = escapeHtml(victim);
     if (killer) {
       const safeKiller = escapeHtml(killer);
@@ -465,7 +472,7 @@
             <span class="lb-dot" style="background:${escapeHtml(p.color)}"></span>
             <span>${escapeHtml(p.name)}</span>
           </div>
-          <span class="lb-score">${Number(p.kills) || 0} ⚔️ ${p.streak >= 3 ? `🔥${Number(p.streak)}` : ''}</span>
+          <span class="lb-score">${Number(p.kills) || 0} ${SVG_SWORD} ${p.streak >= 3 ? `${SVG_FLAME}${Number(p.streak)}` : ''}</span>
         </div>
       `)
       .join('');

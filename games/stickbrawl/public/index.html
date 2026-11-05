@@ -11,7 +11,10 @@
   <div id="lobbyOverlay" class="overlay">
     <div class="lobby-card">
       <div class="brand-header">
-        <a href="/" class="badge-live" style="text-decoration:none;">← SOFIX GAME HUB</a>
+        <a href="/" class="badge-live" style="text-decoration:none;">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          SOFIX GAME HUB
+        </a>
         <h1>STICK<span>BRAWL</span>.IO</h1>
         <p>Gerçek Zamanlı Çok Oyunculu 2D Çöp Adam Platform Savaşı</p>
       </div>
@@ -32,14 +35,16 @@
           <div id="colorPicker" class="color-picker"></div>
 
           <button id="btnQuickPlay" class="btn btn-primary">
-            ⚔️ HEMEN OYNA (GENEL ARENA)
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            HEMEN OYNA (GENEL ARENA)
           </button>
 
           <div class="divider"><span>VEYA ARKADAŞLARINLA OYNA</span></div>
 
           <div class="room-actions">
             <button id="btnCreateRoom" class="btn btn-secondary">
-              🏠 Özel Oda Kur
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Özel Oda Kur
             </button>
             <div class="join-code-group">
               <input
@@ -63,11 +68,14 @@
           </div>
 
           <div class="controls-box">
-            <h3>🎮 KONTROLLER</h3>
+            <h3>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4M8 10v4"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/></svg>
+              KONTROLLER
+            </h3>
             <ul>
-              <li><span>A / D</span> veya <span>← / →</span> Hareket Et</li>
+              <li><span>A / D</span> veya <span>Sol / Sağ</span> Hareket Et</li>
               <li><span>W / Boşluk</span> Zıpla & Çift Zıpla</li>
-              <li><span>S / ↓</span> Platformdan Aşağı İn</li>
+              <li><span>S / Aşağı</span> Platformdan Aşağı İn</li>
               <li><span>Sol Tık</span> Ateş Et / Kılıç Savur</li>
               <li><span>Shift / Sağ Tık</span> Dash (Atılma)</li>
             </ul>
@@ -84,24 +92,46 @@
       <div class="hud-pill room-pill" id="roomBadge" title="Kodu kopyalamak için tıkla">
         <span class="dot"></span>
         <span id="roomCodeText">ODA: PUBLIC</span>
-        <small id="copyHint">📋 Kopyala</small>
+        <small id="copyHint">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopyala
+        </small>
       </div>
       <div class="hud-pill map-pill">
-        🗺️ <span id="mapNameText">Gökyüzü Tapınağı</span>
+        <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <span id="mapNameText">Gökyüzü Tapınağı</span>
       </div>
       <div class="hud-btn-group">
-        <button id="btnNextMap" class="hud-btn" title="Haritayı Değiştir">🔄 Harita</button>
-        <button id="btnAddBot" class="hud-btn" title="Odaya Bot Ekle">🤖 +Bot</button>
-        <button id="btnRemoveBot" class="hud-btn" title="Odadan Bot Çıkar">🤖 -Bot</button>
-        <button id="btnToggleSound" class="hud-btn">🔊 Ses: Açık</button>
-        <button id="btnLeaveRoom" class="hud-btn danger">🚪 Çıkış</button>
+        <button id="btnNextMap" class="hud-btn" title="Haritayı Değiştir">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Harita
+        </button>
+        <button id="btnAddBot" class="hud-btn" title="Odaya Bot Ekle">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+          +Bot
+        </button>
+        <button id="btnRemoveBot" class="hud-btn" title="Odadan Bot Çıkar">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="16" y2="16"/></svg>
+          -Bot
+        </button>
+        <button id="btnToggleSound" class="hud-btn">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <span id="soundBtnText">Ses: Açık</span>
+        </button>
+        <button id="btnLeaveRoom" class="hud-btn danger">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Çıkış
+        </button>
       </div>
     </div>
 
     <!-- Top Right: Leaderboard & Killfeed -->
     <div class="hud-top-right">
       <div class="scoreboard">
-        <div class="scoreboard-title">🏆 SKOR TABLOSU</div>
+        <div class="scoreboard-title">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          SKOR TABLOSU
+        </div>
         <div id="leaderboardList"></div>
       </div>
       <div id="killFeed" class="kill-feed"></div>
@@ -113,7 +143,7 @@
         <div class="weapon-slot">
           <span class="weapon-label">SİLAH</span>
           <strong id="hudWeaponName">Yumruk</strong>
-          <span id="hudAmmoText" class="ammo-badge">∞</span>
+          <span id="hudAmmoText" class="ammo-badge">SINIRSIZ</span>
         </div>
         <div class="bars-slot">
           <div class="hp-row">
@@ -137,4 +167,3 @@
   <script src="game.js"></script>
 </body>
 </html>
-

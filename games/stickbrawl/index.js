@@ -121,8 +121,23 @@ const STICK_COLORS = [
   '#a855f7',
   '#fb923c',
   '#2dd4bf',
-  '#f472b6'
+  '#f472b6',
+  '#60a5fa',
+  '#ef4444',
+  '#a3e635',
+  '#e879f9'
 ];
+
+function pickUniqueColor(room, preferredColor) {
+  const usedColors = new Set(Array.from(room.players.values()).map(p => p.color));
+  if (STICK_COLORS.includes(preferredColor) && !usedColors.has(preferredColor)) {
+    return preferredColor;
+  }
+  for (const c of STICK_COLORS) {
+    if (!usedColors.has(c)) return c;
+  }
+  return STICK_COLORS[room.players.size % STICK_COLORS.length];
+}
 
 // ==========================================
 // MAPS
@@ -323,7 +338,7 @@ function createStickBrawlServer() {
       const botId = `bot_${nextEntityId++}`;
       const botIndex = currentBots.length;
       const botName = BOT_NAMES[botIndex % BOT_NAMES.length];
-      const color = STICK_COLORS[(room.players.size + 3) % STICK_COLORS.length];
+      const color = pickUniqueColor(room, null);
       const bot = createPlayerObj(botId, botName, color, true, room);
       room.players.set(botId, bot);
       currentBots.push(bot);
@@ -977,9 +992,7 @@ function createStickBrawlServer() {
         }
 
         ws.roomCode = room.code;
-        const color = STICK_COLORS.includes(msg.color)
-          ? msg.color
-          : STICK_COLORS[room.players.size % STICK_COLORS.length];
+        const color = pickUniqueColor(room, msg.color);
 
         const player = createPlayerObj(playerId, msg.name || 'Stickman', color, false, room);
         room.players.set(playerId, player);

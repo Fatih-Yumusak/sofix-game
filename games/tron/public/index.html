@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRON: NEON GRID 3D — Sofix Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <!-- LOBBY OVERLAY -->
+  <div id="lobbyOverlay" class="overlay">
+    <div class="lobby-card">
+      <div class="brand-header">
+        <a href="/" class="badge-live">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          SOFIX GAME HUB
+        </a>
+        <h1>TRON: <span>NEON GRID</span> 3D</h1>
+        <p>Devasa 3D Işık Motoru Arenası — 3D Rampalardan Uç, Işık Duvarınla Rakipleri Sıkıştır!</p>
+      </div>
+
+      <div class="lobby-grid">
+        <div class="lobby-col">
+          <label class="field-label" for="playerNameInput">SÜRÜCÜ ADIN</label>
+          <input
+            id="playerNameInput"
+            type="text"
+            maxlength="16"
+            placeholder="Örn: Rinzler"
+            autocomplete="off"
+          />
+
+          <label class="field-label">MOTOR & IŞIK HÜZMESİ RENGİ</label>
+          <div id="colorPicker" class="color-picker"></div>
+
+          <button id="btnQuickPlay" class="btn btn-primary">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            HEMEN OYNA (GENEL ARENA)
+          </button>
+
+          <div class="divider"><span>VEYA ARKADAŞLARINLA OYNA</span></div>
+
+          <div class="room-actions">
+            <button id="btnCreateRoom" class="btn btn-secondary">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              Özel Oda Kur
+            </button>
+            <div class="join-code-group">
+              <input
+                id="roomCodeInput"
+                type="text"
+                maxlength="6"
+                placeholder="ODA KODU"
+                autocomplete="off"
+              />
+              <button id="btnJoinCode" class="btn btn-accent">Katıl</button>
+            </div>
+          </div>
+
+          <div id="lobbyError" class="lobby-error hidden"></div>
+        </div>
+
+        <div class="lobby-col info-col">
+          <div class="controls-box">
+            <h3>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>
+              SÜRÜŞ KONTROLLERİ
+            </h3>
+            <ul>
+              <li><span>W / S</span> veya <span>Yukarı / Aşağı</span> Hızlan / Yavaşla (Tamamen Durabilirsin)</li>
+              <li><span>A / D</span> veya <span>Sol / Sağ</span> Yön Değiştir (Dönüş)</li>
+              <li><span>Shift</span> Turbo Nitro Boost</li>
+              <li><span>Boşluk (Space)</span> Işık Duvarı Üstünden Zıpla (%25 Nitro)</li>
+              <li><span>C</span> Kamera Açısını Değiştir (Yakın / Uzak)</li>
+            </ul>
+          </div>
+
+          <div class="controls-box">
+            <h3>
+              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              HARİTA ÖZELLİKLERİ
+            </h3>
+            <ul>
+              <li><strong>3D Neon Rampalar:</strong> Haritadaki 17 eğimli 3D rampadan geçince havaya fırlatır, rakiplerin ışık duvarlarının üstünden uçmanı sağlar!</li>
+              <li><strong>Tam Nitro Küpü (Sarı):</strong> Nitro enerjini %100 doldurur.</li>
+              <li><strong>Faz Kalkanı (Yeşil):</strong> 5 saniye boyunca ışık duvarlarının içinden patlamadan geçmeni sağlar!</li>
+              <li><strong>Mega İz (Mor):</strong> Işık duvarının uzunluğunu 2 katına çıkarır.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IN-GAME HUD -->
+  <div id="gameHud" class="hud hidden">
+    <!-- Top Left -->
+    <div class="hud-top-left">
+      <div class="hud-pill room-pill" id="roomBadge" title="Kodu kopyalamak için tıkla">
+        <span class="dot"></span>
+        <span id="roomCodeText">GENEL ARENA</span>
+        <small id="copyHint">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Kopyala
+        </small>
+      </div>
+      <div class="hud-btn-group">
+        <button id="btnCamToggle" class="hud-btn">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Kamera (C)
+        </button>
+        <button id="btnAddBot" class="hud-btn">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+          +Bot
+        </button>
+        <button id="btnRemoveBot" class="hud-btn">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="16" y2="16"/></svg>
+          -Bot
+        </button>
+        <button id="btnToggleSound" class="hud-btn">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Ses: Açık
+        </button>
+        <button id="btnLeaveRoom" class="hud-btn danger">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Çıkış
+        </button>
+      </div>
+    </div>
+
+    <!-- Top Right: Leaderboard & Killfeed -->
+    <div class="hud-top-right">
+      <div class="scoreboard">
+        <div class="scoreboard-title">
+          <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          GRID LİDERLERİ
+        </div>
+        <div id="leaderboardList"></div>
+      </div>
+      <div id="killFeed" class="kill-feed"></div>
+    </div>
+
+    <!-- Center Buff Banner -->
+    <div id="buffBanner" class="buff-banner hidden"></div>
+
+    <!-- Bottom Center: Speed & Nitro Bar -->
+    <div class="hud-bottom">
+      <div class="status-card">
+        <div class="speed-box">
+          <span class="speed-label">HIZ</span>
+          <strong id="hudSpeedText">220</strong>
+          <small>KM/S</small>
+        </div>
+        <div class="bars-slot">
+          <div class="nitro-row">
+            <span>W / S: HIZLAN & DUR | SHIFT: BOOST | SPACE: ZIPLA</span>
+            <span id="hudNitroText">100%</span>
+          </div>
+          <div class="nitro-bar-bg">
+            <div id="hudNitroFill" class="nitro-bar-fill"></div>
+          </div>
+          <div id="activePerks" class="active-perks">
+            3D Rampaları kullanarak ışık duvarlarının üstünden uç!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Right: 2D Minimap Radar -->
+    <div class="minimap-wrap">
+      <div class="minimap-title">RADAR (680x680)</div>
+      <canvas id="minimapCanvas" width="185" height="185"></canvas>
+    </div>
+  </div>
+
+  <!-- 3D WEBGL CONTAINER -->
+  <div id="canvasContainer"></div>
+
+  <script src="game.js"></script>
+</body>
+</html>
