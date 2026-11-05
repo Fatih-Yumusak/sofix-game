@@ -328,6 +328,15 @@
     }
   }
 
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function addKillFeedItem(killer, victim, weapon, killerColor, victimColor) {
     const el = document.createElement('div');
     el.className = 'kill-item';
@@ -343,10 +352,12 @@
       void: '🕳️'
     };
     const icon = wepIcons[weapon] || '⚔️';
+    const safeVictim = escapeHtml(victim);
     if (killer) {
-      el.innerHTML = `<span style="color:${killerColor}">${killer}</span> ${icon} <span style="color:${victimColor}">${victim}</span>`;
+      const safeKiller = escapeHtml(killer);
+      el.innerHTML = `<span style="color:${escapeHtml(killerColor)}">${safeKiller}</span> ${icon} <span style="color:${escapeHtml(victimColor)}">${safeVictim}</span>`;
     } else {
-      el.innerHTML = `<span style="color:${victimColor}">${victim}</span> ${icon} düştü`;
+      el.innerHTML = `<span style="color:${escapeHtml(victimColor)}">${safeVictim}</span> ${icon} düştü`;
     }
     killFeed.appendChild(el);
     setTimeout(() => {
@@ -451,10 +462,10 @@
       .map(p => `
         <div class="lb-row ${p.id === myId ? 'me' : ''}">
           <div class="lb-name">
-            <span class="lb-dot" style="background:${p.color}"></span>
-            <span>${p.name}</span>
+            <span class="lb-dot" style="background:${escapeHtml(p.color)}"></span>
+            <span>${escapeHtml(p.name)}</span>
           </div>
-          <span class="lb-score">${p.kills} ⚔️ ${p.streak >= 3 ? `🔥${p.streak}` : ''}</span>
+          <span class="lb-score">${Number(p.kills) || 0} ⚔️ ${p.streak >= 3 ? `🔥${Number(p.streak)}` : ''}</span>
         </div>
       `)
       .join('');

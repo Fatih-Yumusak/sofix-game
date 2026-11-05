@@ -209,8 +209,17 @@ const MAPS = [
   }
 ];
 
+const MAX_ROOMS = 100;
+const MAX_PLAYERS_PER_ROOM = 12;
+
+function sanitizeName(raw) {
+  if (typeof raw !== 'string') return 'Stickman';
+  const cleaned = raw.replace(/[<>&"'`\\]/g, '').replace(/[\u0000-\u001F\u007F]/g, '').trim();
+  return cleaned.slice(0, 16) || 'Stickman';
+}
+
 function createStickBrawlServer() {
-  const wss = new WebSocketServer({ noServer: true });
+  const wss = new WebSocketServer({ noServer: true, maxPayload: 2048 });
   const rooms = new Map();
   let nextEntityId = 1;
 
@@ -258,7 +267,7 @@ function createStickBrawlServer() {
     const spawn = getRandomSpawn(room);
     return {
       id,
-      name: name.slice(0, 16) || 'Stickman',
+      name: sanitizeName(name),
       color,
       isBot,
       x: spawn.x,
@@ -913,6 +922,7 @@ function createStickBrawlServer() {
     const playerId = `p_${nextEntityId++}`;
     ws.playerId = playerId;
     ws.roomCode = null;
+    ws.lastActionAt = 0;
 
     ws.send(JSON.stringify({
       type: 'welcome',
@@ -928,8 +938,14 @@ function createStickBrawlServer() {
       } catch {
         return;
       }
+      if (!msg || typeof msg !== 'object') return;
+
+      const now = Date.now();
 
       if (msg.type === 'join') {
+        if (now - ws.lastActionAt < 400) return;
+        ws.lastActionAt = now;
+
         if (ws.roomCode && rooms.has(ws.roomCode)) {
           const oldRoom = rooms.get(ws.roomCode);
           oldRoom.players.delete(playerId);
@@ -938,14 +954,22 @@ function createStickBrawlServer() {
 
         let room;
         if (msg.mode === 'create') {
+          if (rooms.size >= MAX_ROOMS) {
+            ws.send(JSON.stringify({ type: 'error', message: 'Maksimum oda sınırına ulaşıldı, lütfen genel arenaya katılın.' }));
+            return;
+          }
           const code = generateRoomCode();
           room = createRoom(code, false);
           room.botCount = 0;
         } else if (msg.mode === 'code') {
-          const code = (msg.roomCode || '').trim().toUpperCase();
+          const code = typeof msg.roomCode === 'string' ? msg.roomCode.trim().toUpperCase().slice(0, 6) : '';
           room = rooms.get(code);
           if (!room) {
             ws.send(JSON.stringify({ type: 'error', message: 'Oda bulunamadı! Kodu kontrol edin.' }));
+            return;
+          }
+          if (room.players.size >= MAX_PLAYERS_PER_ROOM) {
+            ws.send(JSON.stringify({ type: 'error', message: 'Bu oda şu an dolu!' }));
             return;
           }
         } else {
@@ -980,10 +1004,13 @@ function createStickBrawlServer() {
         p.input.down = !!msg.down;
         p.input.attack = !!msg.attack;
         p.input.dash = !!msg.dash;
-        if (typeof msg.aimAngle === 'number' && !Number.isNaN(msg.aimAngle)) {
-          p.input.aimAngle = msg.aimAngle;
+        if (typeof msg.aimAngle === 'number' && Number.isFinite(msg.aimAngle)) {
+          p.input.aimAngle = Math.max(-Math.PI, Math.min(Math.PI, msg.aimAngle));
         }
       } else if (msg.type === 'room_action') {
+        if (now - ws.lastActionAt < 350) return;
+        ws.lastActionAt = now;
+
         if (!ws.roomCode) return;
         const room = rooms.get(ws.roomCode);
         if (!room) return;
